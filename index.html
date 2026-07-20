@@ -1,0 +1,1158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <link rel="icon" href="data:,">
+  <title>Visual Scene Questionnaire</title>
+  <style>
+    :root {
+      --page: #f3f5f5;
+      --surface: #ffffff;
+      --ink: #182126;
+      --muted: #5d696f;
+      --line: #cfd6d8;
+      --line-strong: #9eaaae;
+      --accent: #176b5b;
+      --accent-dark: #0d5144;
+      --accent-soft: #e5f1ee;
+      --warning: #9f342d;
+      --focus: #e1a22f;
+      --radius: 6px;
+      --shadow: 0 12px 30px rgba(22, 34, 39, 0.10);
+    }
+
+    * { box-sizing: border-box; }
+
+    html { min-height: 100%; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--page);
+      color: var(--ink);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    button, input { font: inherit; }
+
+    button:focus-visible,
+    input:focus-visible {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .topbar {
+      height: 8px;
+      background: var(--line);
+    }
+
+    .topbar-progress {
+      width: 0;
+      height: 100%;
+      background: var(--accent);
+      transition: width 220ms ease;
+    }
+
+    .shell {
+      width: min(1440px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 28px 0 40px;
+    }
+
+    .study-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      min-height: 38px;
+      margin-bottom: 20px;
+      gap: 20px;
+    }
+
+    .study-title {
+      margin: 0;
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+    .progress-copy {
+      color: var(--muted);
+      font-size: 14px;
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+
+    .intro,
+    .complete {
+      max-width: 760px;
+      margin: 52px auto 0;
+      padding: 0 4px;
+    }
+
+    .intro h1,
+    .complete h1 {
+      margin: 0 0 18px;
+      font-size: 42px;
+      line-height: 1.15;
+      font-weight: 750;
+    }
+
+    .intro p,
+    .complete p {
+      color: #374349;
+      max-width: 68ch;
+    }
+
+    .consent-list {
+      margin: 24px 0;
+      padding-left: 22px;
+      color: #374349;
+    }
+
+    .consent-list li { margin: 8px 0; }
+
+    .check-row {
+      display: grid;
+      grid-template-columns: 22px 1fr;
+      gap: 12px;
+      align-items: start;
+      margin: 14px 0;
+      cursor: pointer;
+    }
+
+    .check-row input {
+      width: 20px;
+      height: 20px;
+      margin: 2px 0 0;
+      accent-color: var(--accent);
+    }
+
+    .question-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.25fr) minmax(360px, 0.75fr);
+      gap: 32px;
+      align-items: start;
+    }
+
+    .stimulus-region {
+      position: sticky;
+      top: 20px;
+    }
+
+    .stimulus-frame {
+      width: 100%;
+      aspect-ratio: 1672 / 941;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid #252c30;
+      border-radius: 4px;
+      background: #111719;
+      box-shadow: var(--shadow);
+    }
+
+    .stimulus-frame img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .stimulus-error {
+      color: #fff;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .question-region {
+      min-height: 520px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    .block-label {
+      margin: 0 0 10px;
+      color: var(--accent-dark);
+      font-size: 13px;
+      font-weight: 750;
+      text-transform: uppercase;
+    }
+
+    fieldset {
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+
+    legend {
+      width: 100%;
+      padding: 0;
+      margin: 0 0 28px;
+      font-size: 24px;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .localized-main,
+    .localized-translation {
+      display: block;
+    }
+
+    .localized-translation {
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.72em;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .scale {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(38px, 1fr));
+      gap: 7px;
+      margin: 8px 0 12px;
+    }
+
+    .scale-option { position: relative; }
+
+    .scale-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .scale-option label {
+      width: 100%;
+      min-height: 50px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+      cursor: pointer;
+      transition: border-color 120ms ease, background 120ms ease, color 120ms ease;
+    }
+
+    .scale-option label:hover {
+      border-color: var(--accent);
+      background: var(--accent-soft);
+    }
+
+    .scale-option input:checked + label {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .scale-option input:focus-visible + label {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .anchors {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.35;
+    }
+
+    .anchors span:nth-child(2) { text-align: center; }
+    .anchors span:last-child { text-align: right; }
+
+    .anchors span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+
+    .anchors .localized-translation {
+      margin-top: 3px;
+      font-size: 0.92em;
+    }
+
+    .binary {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 8px 0 28px;
+    }
+
+    .binary-option { position: relative; }
+
+    .binary-option input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .binary-option label {
+      min-height: 54px;
+      display: grid;
+      place-items: center;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      background: #fff;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 8px;
+      text-align: center;
+    }
+
+    .binary-option input:checked + label {
+      border-color: var(--accent);
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .binary-option input:focus-visible + label {
+      outline: 3px solid var(--focus);
+      outline-offset: 2px;
+    }
+
+    .confidence-title {
+      margin: 0 0 12px;
+      font-weight: 700;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+      margin-top: 36px;
+    }
+
+    .button {
+      min-height: 46px;
+      padding: 0 20px;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 750;
+      cursor: pointer;
+    }
+
+    .button:hover { background: var(--accent-dark); }
+
+    .button:disabled {
+      border-color: var(--line);
+      background: #e6eaeb;
+      color: #879297;
+      cursor: not-allowed;
+    }
+
+    .button.secondary {
+      background: #fff;
+      color: var(--accent-dark);
+    }
+
+    .button.secondary:hover { background: var(--accent-soft); }
+
+    .validation {
+      min-height: 24px;
+      margin: 16px 0 0;
+      color: var(--warning);
+      font-size: 14px;
+      font-weight: 650;
+    }
+
+    .submission-status {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 24px 0 12px;
+      color: #374349;
+      font-weight: 700;
+    }
+
+    .submission-indicator {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+      border: 2px solid var(--line-strong);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 800ms linear infinite;
+    }
+
+    .submission-indicator.success {
+      border: 0;
+      border-radius: 0;
+      color: var(--accent);
+      animation: none;
+    }
+
+    .submission-indicator.success::before { content: "\2713"; }
+
+    .submission-indicator.error {
+      border: 0;
+      border-radius: 0;
+      color: var(--warning);
+      animation: none;
+    }
+
+    .submission-indicator.error::before { content: "!"; }
+
+    .receipt-code {
+      display: inline-block;
+      margin: 14px 0;
+      padding: 10px 12px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      background: #fff;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 15px;
+      overflow-wrap: anywhere;
+    }
+
+    .submission-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 24px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    [hidden] { display: none !important; }
+
+    @media (max-width: 980px) {
+      .shell { width: min(100% - 24px, 760px); padding-top: 18px; }
+      .question-layout { grid-template-columns: 1fr; gap: 20px; }
+      .stimulus-region { position: static; }
+      .question-region { min-height: 0; }
+    }
+
+    @media (max-width: 560px) {
+      .shell { width: min(100% - 20px, 760px); }
+      .study-header { align-items: flex-start; }
+      .question-region { padding: 22px 16px; }
+      .intro h1, .complete h1 { font-size: 32px; }
+      legend { font-size: 21px; margin-bottom: 24px; }
+      .scale { gap: 4px; }
+      .scale-option label { min-height: 44px; font-size: 14px; }
+      .anchors { font-size: 12px; }
+      .actions { margin-top: 28px; }
+      .button { width: 100%; }
+      .submission-actions { flex-direction: column; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="topbar" aria-hidden="true"><div class="topbar-progress" id="topbar-progress"></div></div>
+  <main class="shell">
+    <header class="study-header">
+      <p class="study-title">Visual Scene Questionnaire</p>
+      <p class="progress-copy" id="progress-copy" aria-live="polite"></p>
+    </header>
+
+    <section class="intro" id="intro-screen">
+      <h1>Scene evaluation study</h1>
+      <p>You will view one fictional, film-like image and answer seven short questions about it. The questionnaire usually takes 3 to 5 minutes.</p>
+      <ul class="consent-list">
+        <li>Participation is voluntary.</li>
+        <li>You may stop before submitting your response.</li>
+        <li>No name, email address, or other direct identifier is requested.</li>
+        <li>The image may contain a tense interpersonal situation.</li>
+      </ul>
+      <label class="check-row">
+        <input type="checkbox" id="adult-check">
+        <span>I confirm that I am at least 18 years old.</span>
+      </label>
+      <label class="check-row">
+        <input type="checkbox" id="consent-check">
+        <span>I have read the information above and voluntarily agree to participate.</span>
+      </label>
+      <p class="validation" id="intro-validation" role="alert"></p>
+      <div class="actions">
+        <button class="button" id="begin-button" type="button" disabled>Begin</button>
+      </div>
+    </section>
+
+    <section id="question-screen" hidden>
+      <div class="question-layout">
+        <div class="stimulus-region">
+          <div class="stimulus-frame">
+            <img id="stimulus-image" alt="Fictional film scene used for this questionnaire">
+            <p class="stimulus-error" id="stimulus-error" hidden>The study image could not be loaded. Please stop and notify the research team.</p>
+          </div>
+        </div>
+        <form class="question-region" id="question-form" novalidate>
+          <p class="block-label" id="block-label"></p>
+          <div id="question-content"></div>
+          <p class="validation" id="question-validation" role="alert"></p>
+          <div class="actions">
+            <button class="button" id="next-button" type="submit" disabled>Continue</button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <section class="complete" id="complete-screen" hidden>
+      <h1 id="completion-heading">Submitting your response</h1>
+      <p id="completion-message">Please keep this page open while your response is securely submitted.</p>
+      <div class="submission-status" role="status" aria-live="polite">
+        <span class="submission-indicator" id="submission-indicator" aria-hidden="true"></span>
+        <span id="submission-status-text">Submission in progress</span>
+      </div>
+      <p class="receipt-code" id="completion-code" hidden></p>
+      <div class="submission-actions">
+        <button class="button" id="retry-submission" type="button" hidden>Retry submission</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="survey-config.js"></script>
+  <script>
+    "use strict";
+
+    const CONFIG = Object.freeze({
+      studyId: "FBI",
+      manifestVersion: "6.1.0",
+      questionnaireVersion: "human_questionnaire_v1.2.0",
+      assignmentPool: "primary7_apple_original",
+      imageRoot: window.FBI_SURVEY_CONFIG?.imageRoot || "../../../02_stimuli/final/FBI_images/",
+      submitEndpoint: window.FBI_SURVEY_CONFIG?.submitEndpoint || "",
+      storagePrefix: "fbi-human-questionnaire-v1-2"
+    });
+
+    const STIMULI = Object.freeze({
+      A1: { stimulus_id: "A1", file: "Isa_FBI_A1_neutral-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "baseline", heroine_expression: "neutral", crone_expression: "neutral", sha256: "5d6f130c1f692387b5645355baf071ab37fdeaf90efb7472df102507cb96414d" },
+      A3: { stimulus_id: "A3", file: "Isa_FBI_A3_smile-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "heroine_only", heroine_expression: "smile", crone_expression: "neutral", sha256: "2051a2def24870f8fb7dce973e1e875c346d0e8aed77ed1d2fc7a01cee199242" },
+      A4: { stimulus_id: "A4", file: "Isa_FBI_A4_smile-sinister.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "conflict", heroine_expression: "smile", crone_expression: "sinister", sha256: "72bceb4df48cfd9036b12b78ca76dabf05d39dcd76acc46318cb8ec5c26e38d8" },
+      A5: { stimulus_id: "A5", file: "Isa_FBI_A5_neutral-smile.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "crone_only", heroine_expression: "neutral", crone_expression: "smile", sha256: "d1678cc60c0eec2368d0be0c0341352ad42fd9652c15da54b1ad63cc6ba53fc1" },
+      A6: { stimulus_id: "A6", file: "Isa_FBI_A6_neutral-sinister.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "crone_only", heroine_expression: "neutral", crone_expression: "sinister", sha256: "44156f000e49c1465fc453523e92c19bc288f93ab24de326b76a3286f6620c1a" },
+      A7: { stimulus_id: "A7", file: "Isa_FBI_A7_extreme_fear-smile.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "conflict", heroine_expression: "extreme_fear", crone_expression: "smile", sha256: "4d44011d827e3c338bc7f52db19ad78af328f02940ec02cff62b2a351587f777" },
+      A8: { stimulus_id: "A8", file: "Isa_FBI_A8_extreme_fear-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "heroine_only", heroine_expression: "extreme_fear", crone_expression: "neutral", sha256: "ae9f132df2a61b2889a166ed9e44c40d2c4d170639fc90f3e8761af1963a5bda" }
+    });
+
+    const PRIMARY_POOL = Object.freeze(Object.keys(STIMULI));
+
+    function t(en, ko, zh) {
+      return Object.freeze({ en, ko, zh });
+    }
+
+    const BLOCK_LABELS = Object.freeze({
+      object: t("The apple", "사과", "苹果"),
+      heroine: t("The young woman", "젊은 여성", "年轻女性"),
+      crone: t("The old woman", "노파", "老妇人"),
+      scene: t("The whole scene", "장면 전체", "整个场景")
+    });
+
+    function item(id, block, type, question, min, max, left, right, middle = "") {
+      return { id, block, type, question, min, max, left, right, middle };
+    }
+
+    const FIXED_BLOCKS = Object.freeze([
+      [
+        item("fruit_safety", "object", "scale", t("Is the apple safe to eat?", "이 사과는 먹기에 안전합니까?", "这个苹果食用起来安全吗？"), 0, 6, t("Certainly unsafe", "확실히 안전하지 않음", "肯定不安全"), t("Completely safe", "완전히 안전함", "完全安全")),
+        item("fruit_appeal", "object", "scale", t("How appealing does the apple look?", "이 사과는 얼마나 매력적으로 보입니까?", "这个苹果看起来有多诱人？"), 0, 6, t("Not at all appealing", "전혀 매력적이지 않음", "完全没有吸引力"), t("Extremely appealing", "매우 매력적임", "极具吸引力"))
+      ],
+      [
+        item("danger", "heroine", "scale", t("Is the young woman in danger in this scene?", "이 장면에서 젊은 여성이 위험에 처해 있습니까?", "这个场景中的年轻女性是否处于危险之中？"), 0, 6, t("Not at all", "전혀 아님", "完全没有"), t("Extremely", "매우", "极其"))
+      ],
+      [
+        item("intent", "crone", "scale", t("What is the old woman's intention?", "노파의 의도는 무엇이라고 생각합니까?", "你认为老妇人的意图是什么？"), 1, 7, t("Certainly kind", "확실히 친절함", "肯定是善意的"), t("Certainly harmful", "확실히 해로움", "肯定是有害的"), t("Unclear", "불분명함", "不清楚")),
+        { id: "advice", block: "crone", type: "binary_confidence", question: t("Should the young woman accept the fruit from the old woman?", "젊은 여성이 노파에게서 이 과일을 받아들여야 합니까?", "年轻女性应该接受老妇人递来的水果吗？") }
+      ],
+      [
+        item("idyllic_eerie", "scene", "scale", t("How does this scene appear to you?", "이 장면이 어떻게 보입니까?", "你觉得这个场景呈现出怎样的氛围？"), 1, 7, t("Extremely idyllic", "매우 목가적", "极其田园宁静"), t("Extremely eerie", "매우 섬뜩함", "极其诡异"), t("Neither", "어느 쪽도 아님", "两者都不是")),
+        item("aesthetic_value", "scene", "scale", t("Overall, how aesthetically valuable is this scene?", "전반적으로 이 장면의 미학적 가치는 얼마나 높습니까?", "总体而言，这个场景的审美价值有多高？"), 0, 6, t("No aesthetic value", "미학적 가치가 전혀 없음", "完全没有审美价值"), t("Extremely high aesthetic value", "미학적 가치가 매우 높음", "审美价值极高"))
+      ]
+    ]);
+
+    const ui = {
+      intro: document.getElementById("intro-screen"),
+      question: document.getElementById("question-screen"),
+      complete: document.getElementById("complete-screen"),
+      adult: document.getElementById("adult-check"),
+      consent: document.getElementById("consent-check"),
+      begin: document.getElementById("begin-button"),
+      introValidation: document.getElementById("intro-validation"),
+      progressCopy: document.getElementById("progress-copy"),
+      progressBar: document.getElementById("topbar-progress"),
+      image: document.getElementById("stimulus-image"),
+      imageError: document.getElementById("stimulus-error"),
+      form: document.getElementById("question-form"),
+      blockLabel: document.getElementById("block-label"),
+      content: document.getElementById("question-content"),
+      questionValidation: document.getElementById("question-validation"),
+      next: document.getElementById("next-button"),
+      completionHeading: document.getElementById("completion-heading"),
+      completionMessage: document.getElementById("completion-message"),
+      completionCode: document.getElementById("completion-code"),
+      submissionIndicator: document.getElementById("submission-indicator"),
+      submissionStatusText: document.getElementById("submission-status-text"),
+      retrySubmission: document.getElementById("retry-submission")
+    };
+
+    const params = new URLSearchParams(window.location.search);
+    const fallbackStorage = new Map();
+    const forceNew = params.get("new") === "1";
+    const requestedParticipant = cleanToken(params.get("participant"));
+    const currentPointer = forceNew ? "" : cleanToken(storageGet(`${CONFIG.storagePrefix}:current`));
+    const participantId = requestedParticipant || currentPointer || makeParticipantId();
+    const storageKey = `${CONFIG.storagePrefix}:${participantId}`;
+    let state = loadState();
+    let itemStartedAtMs = 0;
+    let imageReady = false;
+
+    storageSet(`${CONFIG.storagePrefix}:current`, participantId);
+
+    function storageGet(key) {
+      try {
+        return localStorage.getItem(key);
+      } catch (_error) {
+        return fallbackStorage.get(key) || "";
+      }
+    }
+
+    function storageSet(key, value) {
+      try {
+        localStorage.setItem(key, value);
+      } catch (_error) {
+        fallbackStorage.set(key, value);
+      }
+    }
+
+    function cleanToken(value) {
+      return value && /^[A-Za-z0-9_-]{1,80}$/.test(value) ? value : "";
+    }
+
+    function makeParticipantId() {
+      const random = crypto.getRandomValues(new Uint32Array(3));
+      return `P${Date.now().toString(36)}${Array.from(random, value => value.toString(36)).join("")}`;
+    }
+
+    function makeRunId(id) {
+      const date = new Date().toISOString().slice(0, 10).replaceAll("-", "");
+      return `H${date}-${id.slice(-10)}`;
+    }
+
+    function loadState() {
+      if (forceNew) return freshState();
+      try {
+        const loaded = JSON.parse(storageGet(storageKey));
+        if (loaded && loaded.questionnaireVersion === CONFIG.questionnaireVersion) return loaded;
+      } catch (error) {
+        console.warn("Saved questionnaire state could not be read.", error);
+      }
+      return freshState();
+    }
+
+    function freshState() {
+      return {
+        studyId: CONFIG.studyId,
+        manifestVersion: CONFIG.manifestVersion,
+        questionnaireVersion: CONFIG.questionnaireVersion,
+        participantId,
+        evaluatorType: "human",
+        runId: makeRunId(participantId),
+        consentedAt: "",
+        startedAt: "",
+        completedAt: "",
+        submittedAt: "",
+        submissionStatus: "",
+        responseId: "",
+        stimulusId: "",
+        assignmentPool: CONFIG.assignmentPool,
+        itemOrder: [],
+        currentIndex: 0,
+        answers: {},
+        viewport: { width: window.innerWidth, height: window.innerHeight }
+      };
+    }
+
+    function saveState() {
+      storageSet(storageKey, JSON.stringify(state));
+    }
+
+    function randomIndex(length) {
+      const value = crypto.getRandomValues(new Uint32Array(1))[0];
+      return Math.floor((value / 4294967296) * length);
+    }
+
+    function chooseStimulus() {
+      const requested = cleanToken(params.get("stimulus"));
+      if (requested && STIMULI[requested]) return requested;
+      return PRIMARY_POOL[randomIndex(PRIMARY_POOL.length)];
+    }
+
+    function buildItemOrder() {
+      return FIXED_BLOCKS.flatMap(block => block.map(entry => entry.id));
+    }
+
+    function allItems() {
+      return Object.fromEntries(FIXED_BLOCKS.flat().map(entry => [entry.id, entry]));
+    }
+
+    const ITEM_MAP = allItems();
+
+    function adaptQuestion(entry, stimulus) {
+      if (stimulus.object === "apple") return entry;
+      const adapted = { ...entry };
+      adapted.question = t(
+        entry.question.en
+          .replaceAll("this apple", "this fruit")
+          .replaceAll("the apple", "the fruit")
+          .replaceAll("apple", "fruit"),
+        entry.question.ko.replaceAll("이 사과", "이 과일").replaceAll("사과", "과일"),
+        entry.question.zh.replaceAll("这个苹果", "这个水果").replaceAll("苹果", "水果")
+      );
+      return adapted;
+    }
+
+    function localizedText(value) {
+      return `${value.en} (${value.ko}, ${value.zh})`;
+    }
+
+    function setLocalizedContent(element, value, prefix = "") {
+      const main = document.createElement("span");
+      main.className = "localized-main";
+      main.textContent = `${prefix}${value.en}`;
+      const translation = document.createElement("span");
+      translation.className = "localized-translation";
+      translation.textContent = `(${value.ko}, ${value.zh})`;
+      element.replaceChildren(main, translation);
+    }
+
+    function setScreen(name) {
+      ui.intro.hidden = name !== "intro";
+      ui.question.hidden = name !== "question";
+      ui.complete.hidden = name !== "complete";
+    }
+
+    function updateConsentButton() {
+      ui.begin.disabled = !(ui.adult.checked && ui.consent.checked);
+      ui.introValidation.textContent = "";
+    }
+
+    ui.adult.addEventListener("change", updateConsentButton);
+    ui.consent.addEventListener("change", updateConsentButton);
+
+    ui.begin.addEventListener("click", () => {
+      if (!ui.adult.checked || !ui.consent.checked) {
+        ui.introValidation.textContent = "Both confirmations are required to continue.";
+        return;
+      }
+      state.consentedAt = new Date().toISOString();
+      state.startedAt = state.consentedAt;
+      state.stimulusId = chooseStimulus();
+      state.itemOrder = buildItemOrder();
+      state.currentIndex = 0;
+      saveState();
+      prepareStimulus();
+      renderQuestion();
+    });
+
+    function prepareStimulus() {
+      const stimulus = STIMULI[state.stimulusId];
+      imageReady = false;
+      ui.imageError.hidden = true;
+      ui.image.hidden = false;
+      ui.image.src = `${CONFIG.imageRoot}${encodeURIComponent(stimulus.file)}`;
+      ui.image.addEventListener("load", () => {
+        imageReady = true;
+        validateCurrentForm();
+      }, { once: true });
+      ui.image.addEventListener("error", () => {
+        imageReady = false;
+        ui.image.hidden = true;
+        ui.imageError.hidden = false;
+        ui.next.disabled = true;
+      }, { once: true });
+    }
+
+    function renderQuestion() {
+      setScreen("question");
+      const total = state.itemOrder.length;
+      const index = state.currentIndex;
+      const baseItem = ITEM_MAP[state.itemOrder[index]];
+      const stimulus = STIMULI[state.stimulusId];
+      const current = adaptQuestion(baseItem, stimulus);
+
+      ui.progressCopy.textContent = `Question ${index + 1} of ${total}`;
+      ui.progressBar.style.width = `${((index + 1) / total) * 100}%`;
+      ui.blockLabel.textContent = localizedText(BLOCK_LABELS[current.block]);
+      ui.questionValidation.textContent = "";
+      ui.next.disabled = true;
+      ui.next.textContent = index === total - 1 ? "Finish" : "Continue";
+      ui.content.replaceChildren(current.type === "scale" ? renderScale(current) : renderBinaryConfidence(current));
+      itemStartedAtMs = performance.now();
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    function renderScale(entry) {
+      const fieldset = document.createElement("fieldset");
+      const legend = document.createElement("legend");
+      setLocalizedContent(legend, entry.question);
+      fieldset.appendChild(legend);
+
+      const scale = document.createElement("div");
+      scale.className = "scale";
+      for (let value = entry.min; value <= entry.max; value += 1) {
+        const wrap = document.createElement("div");
+        wrap.className = "scale-option";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "rating";
+        input.id = `rating-${value}`;
+        input.value = String(value);
+        input.required = true;
+        const label = document.createElement("label");
+        label.htmlFor = input.id;
+        label.textContent = String(value);
+        wrap.append(input, label);
+        scale.appendChild(wrap);
+      }
+      fieldset.appendChild(scale);
+
+      const anchors = document.createElement("div");
+      anchors.className = "anchors";
+      const left = document.createElement("span");
+      setLocalizedContent(left, entry.left, `${entry.min} - `);
+      const middle = document.createElement("span");
+      if (entry.middle) {
+        setLocalizedContent(middle, entry.middle, `${Math.floor((entry.min + entry.max) / 2)} - `);
+      }
+      const right = document.createElement("span");
+      setLocalizedContent(right, entry.right, `${entry.max} - `);
+      anchors.append(left, middle, right);
+      fieldset.appendChild(anchors);
+      fieldset.addEventListener("change", validateCurrentForm);
+      return fieldset;
+    }
+
+    function renderBinaryConfidence(entry) {
+      const fieldset = document.createElement("fieldset");
+      const legend = document.createElement("legend");
+      setLocalizedContent(legend, entry.question);
+      fieldset.appendChild(legend);
+
+      const binary = document.createElement("div");
+      binary.className = "binary";
+      [
+        { value: "yes", label: t("Yes", "예", "是") },
+        { value: "no", label: t("No", "아니요", "否") }
+      ].forEach(choice => {
+        const wrap = document.createElement("div");
+        wrap.className = "binary-option";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "decision";
+        input.id = `decision-${choice.value}`;
+        input.value = choice.value;
+        input.required = true;
+        const label = document.createElement("label");
+        label.htmlFor = input.id;
+        setLocalizedContent(label, choice.label);
+        wrap.append(input, label);
+        binary.appendChild(wrap);
+      });
+      fieldset.appendChild(binary);
+
+      const confidenceTitle = document.createElement("p");
+      confidenceTitle.className = "confidence-title";
+      setLocalizedContent(confidenceTitle, t("How confident are you in this answer?", "이 답변에 얼마나 확신합니까?", "你对这个回答有多大信心？"));
+      fieldset.appendChild(confidenceTitle);
+
+      const scale = document.createElement("div");
+      scale.className = "scale";
+      for (let value = 0; value <= 6; value += 1) {
+        const wrap = document.createElement("div");
+        wrap.className = "scale-option";
+        const input = document.createElement("input");
+        input.type = "radio";
+        input.name = "confidence";
+        input.id = `confidence-${value}`;
+        input.value = String(value);
+        input.required = true;
+        const label = document.createElement("label");
+        label.htmlFor = input.id;
+        label.textContent = String(value);
+        wrap.append(input, label);
+        scale.appendChild(wrap);
+      }
+      fieldset.appendChild(scale);
+
+      const anchors = document.createElement("div");
+      anchors.className = "anchors";
+      const confidenceLeft = document.createElement("span");
+      setLocalizedContent(confidenceLeft, t("Not at all confident", "전혀 확신하지 않음", "完全没有信心"), "0 - ");
+      const confidenceMiddle = document.createElement("span");
+      const confidenceRight = document.createElement("span");
+      setLocalizedContent(confidenceRight, t("Completely confident", "완전히 확신함", "完全有信心"), "6 - ");
+      anchors.append(confidenceLeft, confidenceMiddle, confidenceRight);
+      fieldset.appendChild(anchors);
+      fieldset.addEventListener("change", validateCurrentForm);
+      return fieldset;
+    }
+
+    function validateCurrentForm() {
+      const current = ITEM_MAP[state.itemOrder[state.currentIndex]];
+      const data = new FormData(ui.form);
+      const complete = current.type === "scale"
+        ? data.has("rating")
+        : data.has("decision") && data.has("confidence");
+      ui.next.disabled = !complete || !imageReady || !ui.imageError.hidden;
+      if (complete) ui.questionValidation.textContent = "";
+      return complete;
+    }
+
+    ui.form.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!validateCurrentForm()) {
+        ui.questionValidation.textContent = "Please select an answer before continuing.";
+        return;
+      }
+      recordCurrentAnswer();
+      if (state.currentIndex >= state.itemOrder.length - 1) {
+        finishQuestionnaire();
+      } else {
+        state.currentIndex += 1;
+        saveState();
+        renderQuestion();
+      }
+    });
+
+    function recordCurrentAnswer() {
+      const id = state.itemOrder[state.currentIndex];
+      const entry = ITEM_MAP[id];
+      const localizedQuestion = adaptQuestion(entry, STIMULI[state.stimulusId]).question;
+      const data = new FormData(ui.form);
+      const answer = {
+        itemId: id,
+        blockId: entry.block,
+        presentationIndex: state.currentIndex + 1,
+        questionEn: localizedQuestion.en,
+        questionKo: localizedQuestion.ko,
+        questionZh: localizedQuestion.zh,
+        answeredAt: new Date().toISOString(),
+        responseMs: Math.round(performance.now() - itemStartedAtMs)
+      };
+      if (entry.type === "scale") {
+        answer.value = Number(data.get("rating"));
+      } else {
+        answer.decision = String(data.get("decision"));
+        answer.confidence = Number(data.get("confidence"));
+        answer.signedValue = answer.decision === "yes" ? answer.confidence : -answer.confidence;
+      }
+      state.answers[id] = answer;
+      saveState();
+    }
+
+    function finishQuestionnaire() {
+      state.completedAt = new Date().toISOString();
+      state.submissionStatus = "pending";
+      saveState();
+      renderComplete();
+      submitResponse();
+    }
+
+    function renderComplete() {
+      setScreen("complete");
+      ui.progressCopy.textContent = "Complete";
+      ui.progressBar.style.width = "100%";
+      ui.retrySubmission.hidden = true;
+      ui.completionCode.hidden = true;
+      ui.submissionIndicator.className = "submission-indicator";
+
+      if (state.submissionStatus === "submitted") {
+        ui.completionHeading.textContent = "Response submitted";
+        ui.completionMessage.textContent = "Thank you. Your response has been recorded. You may now close this page.";
+        ui.submissionStatusText.textContent = "Submission complete";
+        ui.submissionIndicator.classList.add("success");
+        ui.completionCode.textContent = `Receipt: ${state.responseId}`;
+        ui.completionCode.hidden = false;
+      } else if (state.submissionStatus === "failed") {
+        ui.completionHeading.textContent = "Submission interrupted";
+        ui.completionMessage.textContent = "Your response is still saved in this browser. Check your connection and try again.";
+        ui.submissionStatusText.textContent = state.submissionError || "The response could not be submitted.";
+        ui.submissionIndicator.classList.add("error");
+        ui.retrySubmission.hidden = false;
+      } else {
+        ui.completionHeading.textContent = "Submitting your response";
+        ui.completionMessage.textContent = "Please keep this page open while your response is securely submitted.";
+        ui.submissionStatusText.textContent = "Submission in progress";
+      }
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    function exportPayload() {
+      const stimulus = STIMULI[state.stimulusId];
+      return {
+        study_id: state.studyId,
+        manifest_version: state.manifestVersion,
+        questionnaire_version: state.questionnaireVersion,
+        evaluator_id: state.participantId,
+        evaluator_type: state.evaluatorType,
+        run_id: state.runId,
+        assignment_pool: state.assignmentPool,
+        consented_at: state.consentedAt,
+        session_started_at: state.startedAt,
+        session_completed_at: state.completedAt,
+        stimulus: { ...stimulus },
+        item_order: [...state.itemOrder],
+        viewport: { ...state.viewport },
+        answers: state.itemOrder.map(id => state.answers[id]),
+        long_rows: toLongRows()
+      };
+    }
+
+    function toLongRows() {
+      const stimulus = STIMULI[state.stimulusId];
+      const common = {
+        study_id: state.studyId,
+        manifest_version: state.manifestVersion,
+        evaluator_id: state.participantId,
+        evaluator_type: "human",
+        run_id: state.runId,
+        stimulus_id: stimulus.stimulus_id,
+        object: stimulus.object,
+        setting: stimulus.setting,
+        set: stimulus.set,
+        level: stimulus.level,
+        heroine_expression: stimulus.heroine_expression,
+        crone_expression: stimulus.crone_expression,
+        prompt_version: state.questionnaireVersion,
+        model_name: "",
+        model_version: "",
+        temperature: "",
+        seed: "",
+        excluded: "false",
+        exclusion_reason: "",
+        stimulus_sha256: stimulus.sha256,
+        assignment_pool: state.assignmentPool,
+        session_started_at: state.startedAt,
+        session_completed_at: state.completedAt,
+        viewport_width: state.viewport.width,
+        viewport_height: state.viewport.height
+      };
+
+      const rows = [];
+      state.itemOrder.forEach((id, orderIndex) => {
+        const answer = state.answers[id];
+        const base = {
+          ...common,
+          trial_index: orderIndex + 1,
+          item_order: orderIndex + 1,
+          block_id: answer.blockId,
+          question_text: answer.questionEn,
+          question_text_ko: answer.questionKo,
+          question_text_zh: answer.questionZh,
+          timestamp_utc: answer.answeredAt,
+          response_ms: answer.responseMs
+        };
+        if (Object.hasOwn(answer, "value")) {
+          rows.push({ ...base, rating_question: id, rating: answer.value, response_text: "" });
+        } else {
+          const decisionCode = answer.decision === "yes" ? 1 : 0;
+          rows.push({ ...base, rating_question: `${id}_decision`, rating: decisionCode, response_text: answer.decision });
+          rows.push({ ...base, rating_question: `${id}_confidence`, rating: answer.confidence, response_text: "" });
+          rows.push({ ...base, rating_question: `${id}_signed`, rating: answer.signedValue, response_text: "preregistered signed score" });
+        }
+      });
+      return rows;
+    }
+
+    async function submitResponse() {
+      if (state.submissionStatus === "submitted") return;
+      if (!CONFIG.submitEndpoint) {
+        state.submissionStatus = "failed";
+        state.submissionError = "The survey submission service is not configured. Please notify the research team.";
+        saveState();
+        renderComplete();
+        return;
+      }
+
+      state.submissionStatus = "pending";
+      state.submissionError = "";
+      saveState();
+      renderComplete();
+
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 20000);
+      try {
+        const response = await fetch(CONFIG.submitEndpoint, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(exportPayload()),
+          signal: controller.signal
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.ok !== true || !cleanToken(result.response_id)) {
+          throw new Error(result.error || `Submission service returned ${response.status}.`);
+        }
+        state.submittedAt = new Date().toISOString();
+        state.submissionStatus = "submitted";
+        state.responseId = result.response_id;
+        state.submissionError = "";
+        state.answers = {};
+        state.itemOrder = [];
+        state.responsePurged = true;
+        saveState();
+      } catch (error) {
+        state.submissionStatus = "failed";
+        state.submissionError = error.name === "AbortError"
+          ? "The submission timed out. Please try again."
+          : "The response could not be submitted. Please try again.";
+        saveState();
+      } finally {
+        window.clearTimeout(timeout);
+        renderComplete();
+      }
+    }
+
+    ui.retrySubmission.addEventListener("click", submitResponse);
+
+    function initialize() {
+      if (forceNew) {
+        const cleanUrl = new URL(window.location.href);
+        cleanUrl.searchParams.delete("new");
+        history.replaceState({}, "", cleanUrl.toString());
+      }
+      if (state.completedAt) {
+        renderComplete();
+        if (state.submissionStatus !== "submitted") submitResponse();
+      } else if (state.startedAt && state.stimulusId && state.itemOrder.length) {
+        prepareStimulus();
+        renderQuestion();
+      } else {
+        setScreen("intro");
+        ui.progressCopy.textContent = "";
+        ui.progressBar.style.width = "0%";
+      }
+    }
+
+    initialize();
+  </script>
+</body>
+</html>
