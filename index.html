@@ -528,13 +528,13 @@
       <div class="project-overview">
         <h2>About this project (프로젝트 소개, 项目简介)</h2>
         <p>
-          <span class="localized-main">This project studies how people and vision-language systems interpret the same fictional film scene. We examine judgments about an object, the characters' situation, the atmosphere, and the scene's aesthetic value. Your responses provide a human comparison for automated visual judgments. There are no right or wrong answers.</span>
-          <span class="localized-translation">(이 프로젝트는 사람과 비전-언어 시스템이 동일한 허구의 영화 장면을 어떻게 해석하는지 연구합니다. 장면 속 물체, 인물의 상황, 분위기, 그리고 장면의 미학적 가치에 대한 판단을 살펴봅니다. 여러분의 응답은 자동화된 시각 판단과 비교할 인간 기준을 만드는 데 사용됩니다. 정답이나 오답은 없습니다., 本项目研究人类与视觉语言系统如何理解同一个虚构电影场景。我们关注人们对场景中物体、人物处境、整体氛围和审美价值的判断。您的回答将为自动视觉判断提供人类比较基准。本问卷没有正确或错误答案。)</span>
+          <span class="localized-main">This project studies how people and vision-language systems interpret the same fictional film scene. We examine judgments about the characters' situation and the action shown in the scene. Your responses provide a human comparison for automated visual judgments. There are no right or wrong answers.</span>
+          <span class="localized-translation">(이 프로젝트는 사람과 비전-언어 시스템이 동일한 허구의 영화 장면을 어떻게 해석하는지 연구합니다. 장면 속 인물의 상황과 제시된 행동에 대한 판단을 살펴봅니다. 여러분의 응답은 자동화된 시각 판단과 비교할 인간 기준을 만드는 데 사용됩니다. 정답이나 오답은 없습니다., 本项目研究人类与视觉语言系统如何理解同一个虚构电影场景。我们关注人们对人物处境及场景中行为的判断。您的回答将为自动视觉判断提供人类比较基准。本问卷没有正确或错误答案。)</span>
         </p>
       </div>
       <p>
-        <span class="localized-main">You will view one image, answer seven scene questions, and provide four basic background responses. The questionnaire usually takes 4 to 6 minutes.</span>
-        <span class="localized-translation">(이미지 한 장을 보고 장면에 관한 일곱 문항과 기본 배경 정보 네 문항에 답하게 됩니다. 설문에는 보통 4~6분이 걸립니다., 您将观看一张图片，回答七个场景问题和四个基本背景问题。问卷通常需要4至6分钟。)</span>
+        <span class="localized-main">You will view one image, answer seven scene questions, and provide two basic background responses. The questionnaire usually takes 4 to 6 minutes.</span>
+        <span class="localized-translation">(이미지 한 장을 보고 장면에 관한 일곱 문항과 기본 배경 정보 두 문항에 답하게 됩니다. 설문에는 보통 4~6분이 걸립니다., 您将观看一张图片，回答七个场景问题和两个基本背景问题。问卷通常需要4至6分钟。)</span>
       </p>
       <ul class="consent-list">
         <li>Participation is voluntary. (참여는 자발적입니다., 参与完全自愿。)</li>
@@ -550,6 +550,15 @@
         <input type="checkbox" id="consent-check">
         <span>I have read the information above and voluntarily agree to participate. (위 정보를 읽었으며 자발적으로 참여하는 데 동의합니다., 我已阅读上述信息并自愿同意参与。)</span>
       </label>
+      <div class="demographic-field">
+        <label for="response-language">Which language will you primarily use to read this questionnaire? (이 설문을 읽을 때 주로 사용할 언어는 무엇입니까?, 您将主要使用哪种语言阅读本问卷？)</label>
+        <select id="response-language" required>
+          <option value="">Select (선택, 请选择)</option>
+          <option value="en">English (영어, 英语)</option>
+          <option value="ko">Korean (한국어, 韩语)</option>
+          <option value="zh">Chinese (중국어, 中文)</option>
+        </select>
+      </div>
       <p class="validation" id="intro-validation" role="alert"></p>
       <div class="actions">
         <button class="button" id="begin-button" type="button" disabled>Begin (시작, 开始)</button>
@@ -578,8 +587,8 @@
     <section class="demographics" id="demographics-screen" hidden>
       <h1>Participant background (참가자 배경 정보, 参与者背景信息)</h1>
       <p>
-        <span class="localized-main">Please answer four brief background questions. Select “Prefer not to answer” whenever you do not wish to provide an answer.</span>
-        <span class="localized-translation">(간단한 배경 정보 네 문항에 답해 주세요. 응답을 원하지 않는 문항은 “응답하지 않음”을 선택할 수 있습니다., 请回答四个简短的背景问题。如果您不希望提供某项信息，请选择“不愿回答”。)</span>
+        <span class="localized-main">Please answer two brief background questions. Select “Prefer not to answer” whenever you do not wish to provide an answer.</span>
+        <span class="localized-translation">(간단한 배경 정보 두 문항에 답해 주세요. 응답을 원하지 않는 문항은 “응답하지 않음”을 선택할 수 있습니다., 请回答两个简短的背景问题。如果您不希望提供某项信息，请选择“不愿回答”。)</span>
       </p>
       <form id="demographics-form" novalidate>
         <div class="demographic-fields">
@@ -603,35 +612,6 @@
               <option value="woman">Woman (여성, 女性)</option>
               <option value="man">Man (남성, 男性)</option>
               <option value="nonbinary_other">Non-binary or another identity (논바이너리 또는 다른 정체성, 非二元性别或其他认同)</option>
-              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
-            </select>
-          </div>
-          <div class="demographic-field">
-            <label for="region">Region of residence (거주 권역, 居住地区)</label>
-            <select id="region" name="region" required>
-              <option value="">Select (선택, 请选择)</option>
-              <option value="east_asia">East Asia (동아시아, 东亚)</option>
-              <option value="southeast_asia">Southeast Asia (동남아시아, 东南亚)</option>
-              <option value="south_asia">South Asia (남아시아, 南亚)</option>
-              <option value="europe">Europe (유럽, 欧洲)</option>
-              <option value="north_america">North America (북아메리카, 北美洲)</option>
-              <option value="latin_america_caribbean">Latin America or the Caribbean (라틴아메리카 또는 카리브해, 拉丁美洲或加勒比地区)</option>
-              <option value="middle_east_north_africa">Middle East or North Africa (중동 또는 북아프리카, 中东或北非)</option>
-              <option value="sub_saharan_africa">Sub-Saharan Africa (사하라 이남 아프리카, 撒哈拉以南非洲)</option>
-              <option value="oceania">Oceania (오세아니아, 大洋洲)</option>
-              <option value="other">Other region (기타 권역, 其他地区)</option>
-              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
-            </select>
-          </div>
-          <div class="demographic-field">
-            <label for="education">Highest completed education (최종 학력, 最高学历)</label>
-            <select id="education" name="education" required>
-              <option value="">Select (선택, 请选择)</option>
-              <option value="less_than_secondary">Less than secondary school (중등교육 미만, 未完成中等教育)</option>
-              <option value="secondary">Secondary school (중등교육, 中等教育)</option>
-              <option value="some_college">Some college or associate degree (대학 재학 또는 전문학사, 部分大学教育或副学士)</option>
-              <option value="bachelors">Bachelor's degree (학사, 学士)</option>
-              <option value="graduate">Graduate or professional degree (대학원 또는 전문학위, 研究生或专业学位)</option>
               <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
             </select>
           </div>
@@ -664,21 +644,17 @@
     const CONFIG = Object.freeze({
       studyId: "FBI",
       manifestVersion: "6.1.0",
-      questionnaireVersion: "human_questionnaire_v1.4.0",
-      assignmentPool: "primary7_apple_original",
+      questionnaireVersion: "human_questionnaire_v2.0.0",
+      assignmentPool: "confirmatory_A4_A6_1to1",
       imageRoot: window.FBI_SURVEY_CONFIG?.imageRoot || "../../../02_stimuli/final/FBI_images/",
+      assignEndpoint: window.FBI_SURVEY_CONFIG?.assignEndpoint || "",
       submitEndpoint: window.FBI_SURVEY_CONFIG?.submitEndpoint || "",
-      storagePrefix: "fbi-human-questionnaire-v1-4"
+      storagePrefix: "fbi-human-questionnaire-v2"
     });
 
     const STIMULI = Object.freeze({
-      A1: { stimulus_id: "A1", file: "Isa_FBI_A1_neutral-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "baseline", heroine_expression: "neutral", crone_expression: "neutral", sha256: "5d6f130c1f692387b5645355baf071ab37fdeaf90efb7472df102507cb96414d" },
-      A3: { stimulus_id: "A3", file: "Isa_FBI_A3_smile-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "heroine_only", heroine_expression: "smile", crone_expression: "neutral", sha256: "2051a2def24870f8fb7dce973e1e875c346d0e8aed77ed1d2fc7a01cee199242" },
       A4: { stimulus_id: "A4", file: "Isa_FBI_A4_smile-sinister.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "conflict", heroine_expression: "smile", crone_expression: "sinister", sha256: "72bceb4df48cfd9036b12b78ca76dabf05d39dcd76acc46318cb8ec5c26e38d8" },
-      A5: { stimulus_id: "A5", file: "Isa_FBI_A5_neutral-smile.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "crone_only", heroine_expression: "neutral", crone_expression: "smile", sha256: "d1678cc60c0eec2368d0be0c0341352ad42fd9652c15da54b1ad63cc6ba53fc1" },
-      A6: { stimulus_id: "A6", file: "Isa_FBI_A6_neutral-sinister.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "crone_only", heroine_expression: "neutral", crone_expression: "sinister", sha256: "44156f000e49c1465fc453523e92c19bc288f93ab24de326b76a3286f6620c1a" },
-      A7: { stimulus_id: "A7", file: "Isa_FBI_A7_extreme_fear-smile.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "conflict", heroine_expression: "extreme_fear", crone_expression: "smile", sha256: "4d44011d827e3c338bc7f52db19ad78af328f02940ec02cff62b2a351587f777" },
-      A8: { stimulus_id: "A8", file: "Isa_FBI_A8_extreme_fear-neutral.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "heroine_only", heroine_expression: "extreme_fear", crone_expression: "neutral", sha256: "ae9f132df2a61b2889a166ed9e44c40d2c4d170639fc90f3e8761af1963a5bda" }
+      A6: { stimulus_id: "A6", file: "Isa_FBI_A6_neutral-sinister.png", object: "apple", setting: "canonical_fantasy", set: "factorial_3x3", level: "crone_only", heroine_expression: "neutral", crone_expression: "sinister", sha256: "44156f000e49c1465fc453523e92c19bc288f93ab24de326b76a3286f6620c1a" }
     });
 
     const PRIMARY_POOL = Object.freeze(Object.keys(STIMULI));
@@ -688,10 +664,9 @@
     }
 
     const BLOCK_LABELS = Object.freeze({
-      object: t("The apple", "사과", "苹果"),
-      heroine: t("The young woman", "젊은 여성", "年轻女性"),
-      crone: t("The old woman", "노파", "老妇人"),
-      scene: t("The whole scene", "장면 전체", "整个场景")
+      scene: t("Initial scene judgment", "첫 장면 판단", "初始场景判断"),
+      inference: t("Interpretation", "상황 해석", "情境判断"),
+      checks: t("Final questions", "마지막 질문", "最后问题")
     });
 
     function item(id, block, type, question, min, max, left, right, middle = "") {
@@ -700,19 +675,17 @@
 
     const FIXED_BLOCKS = Object.freeze([
       [
-        item("fruit_safety", "object", "scale", t("Is the apple safe to eat?", "이 사과는 먹기에 안전합니까?", "这个苹果食用起来安全吗？"), 0, 6, t("Certainly unsafe", "확실히 안전하지 않음", "肯定不安全"), t("Completely safe", "완전히 안전함", "完全安全")),
-        item("fruit_appeal", "object", "scale", t("How appealing does the apple look?", "이 사과는 얼마나 매력적으로 보입니까?", "这个苹果看起来有多诱人？"), 0, 6, t("Not at all appealing", "전혀 매력적이지 않음", "完全没有吸引力"), t("Extremely appealing", "매우 매력적임", "极具吸引力"))
+        item("danger", "scene", "scale", t("How much danger is the young woman in at this moment?", "이 순간 젊은 여성은 얼마나 위험한 상황에 있습니까?", "此刻，这位年轻女性面临多大危险？"), 0, 6, t("No danger", "위험하지 않음", "没有危险"), t("Extreme danger", "극도로 위험함", "极度危险"))
       ],
       [
-        item("danger", "heroine", "scale", t("Is the young woman in danger in this scene?", "이 장면에서 젊은 여성이 위험에 처해 있습니까?", "这个场景中的年轻女性是否处于危险之中？"), 0, 6, t("Not at all", "전혀 아님", "完全没有"), t("Extremely", "매우", "极其"))
+        item("intent", "inference", "scale", t("How likely is it that the old woman intends to harm the young woman?", "노파가 젊은 여성을 해치려는 의도를 가지고 있을 가능성은 얼마나 높습니까?", "老妇人有意伤害年轻女性的可能性有多大？"), 0, 6, t("Not at all likely", "전혀 가능성이 없음", "完全不可能"), t("Extremely likely", "매우 가능성이 높음", "极有可能")),
+        { id: "advice", block: "inference", type: "binary", question: t("Should the young woman accept the fruit from the old woman?", "젊은 여성이 노파에게서 이 과일을 받아들여야 합니까?", "年轻女性应该接受老妇人递来的水果吗？") }
       ],
       [
-        item("intent", "crone", "scale", t("What is the old woman's intention?", "노파의 의도는 무엇이라고 생각합니까?", "你认为老妇人的意图是什么？"), 1, 7, t("Certainly kind", "확실히 친절함", "肯定是善意的"), t("Certainly harmful", "확실히 해로움", "肯定是有害的"), t("Unclear", "불분명함", "不清楚")),
-        { id: "advice", block: "crone", type: "binary_confidence", question: t("Should the young woman accept the fruit from the old woman?", "젊은 여성이 노파에게서 이 과일을 받아들여야 합니까?", "年轻女性应该接受老妇人递来的水果吗？") }
-      ],
-      [
-        item("idyllic_eerie", "scene", "scale", t("How does this scene appear to you?", "이 장면이 어떻게 보입니까?", "你觉得这个场景呈现出怎样的氛围？"), 1, 7, t("Extremely idyllic", "매우 목가적", "极其田园宁静"), t("Extremely eerie", "매우 섬뜩함", "极其诡异"), t("Neither", "어느 쪽도 아님", "两者都不是")),
-        item("aesthetic_value", "scene", "scale", t("Overall, how aesthetically valuable is this scene?", "전반적으로 이 장면의 미학적 가치는 얼마나 높습니까?", "总体而言，这个场景的审美价值有多高？"), 0, 6, t("No aesthetic value", "미학적 가치가 전혀 없음", "完全没有审美价值"), t("Extremely high aesthetic value", "미학적 가치가 매우 높음", "审美价值极高"))
+        item("heroine_smile", "checks", "scale", t("How strongly is the young woman smiling?", "젊은 여성은 얼마나 뚜렷하게 미소 짓고 있습니까?", "年轻女性的微笑有多明显？"), 0, 6, t("Not smiling", "미소 짓지 않음", "没有微笑"), t("Smiling very strongly", "매우 뚜렷하게 미소 지음", "微笑非常明显")),
+        item("crone_threat", "checks", "scale", t("How threatening does the old woman appear?", "노파는 얼마나 위협적으로 보입니까?", "老妇人看起来有多具威胁性？"), 0, 6, t("Not at all threatening", "전혀 위협적이지 않음", "完全没有威胁性"), t("Extremely threatening", "극도로 위협적임", "极具威胁性")),
+        { id: "story_recognition", block: "checks", type: "binary", question: t("Before this question, did you recognize this scene as depicting Snow White?", "이 질문을 보기 전에 이 장면이 백설공주 이야기임을 알아보았습니까?", "在看到本题之前，您是否认出这个场景描绘的是白雪公主？") },
+        item("story_familiarity", "checks", "scale", t("Before today, how familiar were you with the story of Snow White?", "오늘 이전에 백설공주 이야기를 얼마나 잘 알고 있었습니까?", "在今天之前，您对白雪公主的故事有多熟悉？"), 0, 6, t("Not at all familiar", "전혀 알지 못함", "完全不熟悉"), t("Extremely familiar", "매우 잘 알고 있음", "非常熟悉"))
       ]
     ]);
 
@@ -723,6 +696,7 @@
       complete: document.getElementById("complete-screen"),
       adult: document.getElementById("adult-check"),
       consent: document.getElementById("consent-check"),
+      responseLanguage: document.getElementById("response-language"),
       begin: document.getElementById("begin-button"),
       introValidation: document.getElementById("intro-validation"),
       progressCopy: document.getElementById("progress-copy"),
@@ -812,7 +786,9 @@
         submittedAt: "",
         submissionStatus: "",
         responseId: "",
+        assignmentId: "",
         stimulusId: "",
+        responseLanguage: "",
         assignmentPool: CONFIG.assignmentPool,
         itemOrder: [],
         currentIndex: 0,
@@ -831,10 +807,33 @@
       return Math.floor((value / 4294967296) * length);
     }
 
-    function chooseStimulus() {
+    function chooseLocalStimulus() {
       const requested = cleanToken(params.get("stimulus"));
       if (requested && STIMULI[requested]) return requested;
       return PRIMARY_POOL[randomIndex(PRIMARY_POOL.length)];
+    }
+
+    async function assignStimulus() {
+      if (state.stimulusId && STIMULI[state.stimulusId]) return state.stimulusId;
+      if (!CONFIG.assignEndpoint) {
+        state.assignmentId = `local-${state.runId}`;
+        return chooseLocalStimulus();
+      }
+      const response = await fetch(CONFIG.assignEndpoint, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          participant_id: state.participantId,
+          run_id: state.runId,
+          response_language: state.responseLanguage
+        })
+      });
+      const result = await response.json().catch(() => ({}));
+      if (!response.ok || result.ok !== true || !STIMULI[result.stimulus_id] || !cleanToken(result.assignment_id)) {
+        throw new Error(result.error || "Assignment service unavailable.");
+      }
+      state.assignmentId = result.assignment_id;
+      return result.stimulus_id;
     }
 
     function buildItemOrder() {
@@ -883,26 +882,41 @@
     }
 
     function updateConsentButton() {
-      ui.begin.disabled = !(ui.adult.checked && ui.consent.checked);
+      ui.begin.disabled = !(ui.adult.checked && ui.consent.checked && ui.responseLanguage.value);
       ui.introValidation.textContent = "";
     }
 
     ui.adult.addEventListener("change", updateConsentButton);
     ui.consent.addEventListener("change", updateConsentButton);
+    ui.responseLanguage.addEventListener("change", updateConsentButton);
 
-    ui.begin.addEventListener("click", () => {
-      if (!ui.adult.checked || !ui.consent.checked) {
-        ui.introValidation.textContent = "Both confirmations are required to continue. (계속하려면 두 항목을 모두 확인해야 합니다., 必须确认以上两项才能继续。)";
+    ui.begin.addEventListener("click", async () => {
+      if (!ui.adult.checked || !ui.consent.checked || !ui.responseLanguage.value) {
+        ui.introValidation.textContent = "Both confirmations and a primary response language are required. (두 확인 항목과 주 응답 언어를 모두 선택해야 합니다., 必须完成两项确认并选择主要作答语言。)";
         return;
       }
+      ui.begin.disabled = true;
+      ui.begin.textContent = "Preparing study (설문 준비 중, 正在准备问卷)";
       state.consentedAt = new Date().toISOString();
       state.startedAt = state.consentedAt;
-      state.stimulusId = chooseStimulus();
-      state.itemOrder = buildItemOrder();
-      state.currentIndex = 0;
-      saveState();
-      prepareStimulus();
-      renderQuestion();
+      state.responseLanguage = ui.responseLanguage.value;
+      try {
+        state.stimulusId = await assignStimulus();
+        state.itemOrder = buildItemOrder();
+        state.currentIndex = 0;
+        saveState();
+        prepareStimulus();
+        renderQuestion();
+      } catch (error) {
+        state.startedAt = "";
+        state.consentedAt = "";
+        saveState();
+        ui.begin.textContent = "Begin (시작, 开始)";
+        ui.begin.disabled = false;
+        ui.introValidation.textContent = error.message === "Recruitment is complete."
+          ? "Recruitment for this study is complete. Thank you for your interest. (이 연구의 모집이 완료되었습니다. 관심을 가져주셔서 감사합니다., 本研究招募已结束，感谢您的关注。)"
+          : "The study could not be started. Please try again later. (설문을 시작할 수 없습니다. 나중에 다시 시도해 주세요., 无法开始问卷，请稍后再试。)";
+      }
     });
 
     function prepareStimulus() {
@@ -939,7 +953,7 @@
       ui.next.textContent = index === total - 1
         ? "Finish (완료, 完成)"
         : "Continue (계속, 继续)";
-      ui.content.replaceChildren(current.type === "scale" ? renderScale(current) : renderBinaryConfidence(current));
+      ui.content.replaceChildren(current.type === "scale" ? renderScale(current) : renderBinary(current));
       itemStartedAtMs = performance.now();
       window.scrollTo({ top: 0, behavior: "auto" });
     }
@@ -985,7 +999,7 @@
       return fieldset;
     }
 
-    function renderBinaryConfidence(entry) {
+    function renderBinary(entry) {
       const fieldset = document.createElement("fieldset");
       const legend = document.createElement("legend");
       setLocalizedContent(legend, entry.question);
@@ -1012,40 +1026,6 @@
         binary.appendChild(wrap);
       });
       fieldset.appendChild(binary);
-
-      const confidenceTitle = document.createElement("p");
-      confidenceTitle.className = "confidence-title";
-      setLocalizedContent(confidenceTitle, t("How confident are you in this answer?", "이 답변에 얼마나 확신합니까?", "你对这个回答有多大信心？"));
-      fieldset.appendChild(confidenceTitle);
-
-      const scale = document.createElement("div");
-      scale.className = "scale";
-      for (let value = 0; value <= 6; value += 1) {
-        const wrap = document.createElement("div");
-        wrap.className = "scale-option";
-        const input = document.createElement("input");
-        input.type = "radio";
-        input.name = "confidence";
-        input.id = `confidence-${value}`;
-        input.value = String(value);
-        input.required = true;
-        const label = document.createElement("label");
-        label.htmlFor = input.id;
-        label.textContent = String(value);
-        wrap.append(input, label);
-        scale.appendChild(wrap);
-      }
-      fieldset.appendChild(scale);
-
-      const anchors = document.createElement("div");
-      anchors.className = "anchors";
-      const confidenceLeft = document.createElement("span");
-      setLocalizedContent(confidenceLeft, t("Not at all confident", "전혀 확신하지 않음", "完全没有信心"), "0 - ");
-      const confidenceMiddle = document.createElement("span");
-      const confidenceRight = document.createElement("span");
-      setLocalizedContent(confidenceRight, t("Completely confident", "완전히 확신함", "完全有信心"), "6 - ");
-      anchors.append(confidenceLeft, confidenceMiddle, confidenceRight);
-      fieldset.appendChild(anchors);
       fieldset.addEventListener("change", validateCurrentForm);
       return fieldset;
     }
@@ -1055,7 +1035,7 @@
       const data = new FormData(ui.form);
       const complete = current.type === "scale"
         ? data.has("rating")
-        : data.has("decision") && data.has("confidence");
+        : data.has("decision");
       ui.next.disabled = !complete || !imageReady || !ui.imageError.hidden;
       if (complete) ui.questionValidation.textContent = "";
       return complete;
@@ -1096,8 +1076,6 @@
         answer.value = Number(data.get("rating"));
       } else {
         answer.decision = String(data.get("decision"));
-        answer.confidence = Number(data.get("confidence"));
-        answer.signedValue = answer.decision === "yes" ? answer.confidence : -answer.confidence;
       }
       state.answers[id] = answer;
       saveState();
@@ -1133,9 +1111,7 @@
       const data = new FormData(ui.demographicsForm);
       state.demographics = {
         age_group: String(data.get("age_group")),
-        gender: String(data.get("gender")),
-        region: String(data.get("region")),
-        education: String(data.get("education"))
+        gender: String(data.get("gender"))
       };
       saveState();
       finishQuestionnaire();
@@ -1179,7 +1155,9 @@
         evaluator_id: state.participantId,
         evaluator_type: state.evaluatorType,
         run_id: state.runId,
+        assignment_id: state.assignmentId,
         assignment_pool: state.assignmentPool,
+        response_language: state.responseLanguage,
         consented_at: state.consentedAt,
         session_started_at: state.startedAt,
         session_completed_at: state.completedAt,
@@ -1215,15 +1193,15 @@
         excluded: "false",
         exclusion_reason: "",
         stimulus_sha256: stimulus.sha256,
+        assignment_id: state.assignmentId,
         assignment_pool: state.assignmentPool,
         session_started_at: state.startedAt,
         session_completed_at: state.completedAt,
         viewport_width: state.viewport.width,
         viewport_height: state.viewport.height,
+        response_language: state.responseLanguage,
         age_group: state.demographics.age_group,
-        gender: state.demographics.gender,
-        region: state.demographics.region,
-        education: state.demographics.education
+        gender: state.demographics.gender
       };
 
       const rows = [];
@@ -1244,9 +1222,7 @@
           rows.push({ ...base, rating_question: id, rating: answer.value, response_text: "" });
         } else {
           const decisionCode = answer.decision === "yes" ? 1 : 0;
-          rows.push({ ...base, rating_question: `${id}_decision`, rating: decisionCode, response_text: answer.decision });
-          rows.push({ ...base, rating_question: `${id}_confidence`, rating: answer.confidence, response_text: "" });
-          rows.push({ ...base, rating_question: `${id}_signed`, rating: answer.signedValue, response_text: "preregistered signed score" });
+          rows.push({ ...base, rating_question: id, rating: decisionCode, response_text: answer.decision });
         }
       });
       return rows;
@@ -1319,6 +1295,8 @@
         renderQuestion();
       } else {
         setScreen("intro");
+        if (state.responseLanguage) ui.responseLanguage.value = state.responseLanguage;
+        updateConsentButton();
         ui.progressCopy.textContent = "";
         ui.progressBar.style.width = "0%";
       }
