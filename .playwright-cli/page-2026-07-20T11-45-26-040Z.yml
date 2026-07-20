@@ -1,0 +1,43 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - paragraph [ref=e5]: Visual Scene Questionnaire
+    - paragraph [ref=e24]: Question 2 of 7
+  - generic [ref=e26]:
+    - img "Fictional film scene used for this questionnaire" [ref=e29]
+    - generic [ref=e30]:
+      - paragraph [ref=e31]: The apple (사과, 苹果)
+      - group "How appealing does the apple look? (이 사과는 얼마나 매력적으로 보입니까?, 这个苹果看起来有多诱人？)" [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]: How appealing does the apple look?
+          - generic [ref=e66]: (이 사과는 얼마나 매력적으로 보입니까?, 这个苹果看起来有多诱人？)
+        - generic [ref=e67]:
+          - generic [ref=e68]:
+            - radio "0"
+            - generic [ref=e69] [cursor=pointer]: "0"
+          - generic [ref=e70]:
+            - radio "1"
+            - generic [ref=e71] [cursor=pointer]: "1"
+          - generic [ref=e72]:
+            - radio "2"
+            - generic [ref=e73] [cursor=pointer]: "2"
+          - generic [ref=e74]:
+            - radio "3" [checked] [active]
+            - generic [ref=e75] [cursor=pointer]: "3"
+          - generic [ref=e76]:
+            - radio "4"
+            - generic [ref=e77] [cursor=pointer]: "4"
+          - generic [ref=e78]:
+            - radio "5"
+            - generic [ref=e79] [cursor=pointer]: "5"
+          - generic [ref=e80]:
+            - radio "6"
+            - generic [ref=e81] [cursor=pointer]: "6"
+        - generic [ref=e82]:
+          - generic [ref=e83]:
+            - generic [ref=e84]: 0 - Not at all appealing
+            - generic [ref=e85]: (전혀 매력적이지 않음, 完全没有吸引力)
+          - generic [ref=e87]:
+            - generic [ref=e88]: 6 - Extremely appealing
+            - generic [ref=e89]: (매우 매력적임, 极具吸引力)
+      - alert [ref=e60]
+      - button "Continue" [ref=e62] [cursor=pointer]

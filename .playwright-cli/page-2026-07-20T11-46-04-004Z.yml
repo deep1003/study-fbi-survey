@@ -1,0 +1,57 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - paragraph [ref=e5]: Visual Scene Questionnaire
+    - paragraph [ref=e24]: Question 5 of 7
+  - generic [ref=e26]:
+    - img "Fictional film scene used for this questionnaire" [ref=e29]
+    - generic [ref=e30]:
+      - paragraph [ref=e31]: The old woman (노파, 老妇人)
+      - group "Should the young woman accept the fruit from the old woman? (젊은 여성이 노파에게서 이 과일을 받아들여야 합니까?, 年轻女性应该接受老妇人递来的水果吗？)" [ref=e146]:
+        - generic [ref=e147]:
+          - generic [ref=e148]: Should the young woman accept the fruit from the old woman?
+          - generic [ref=e149]: (젊은 여성이 노파에게서 이 과일을 받아들여야 합니까?, 年轻女性应该接受老妇人递来的水果吗？)
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - radio "Yes (예, 是)"
+            - generic [ref=e152] [cursor=pointer]:
+              - generic [ref=e153]: "Yes"
+              - generic [ref=e154]: (예, 是)
+          - generic [ref=e155]:
+            - radio "No (아니요, 否)" [checked]
+            - generic [ref=e156] [cursor=pointer]:
+              - generic [ref=e157]: "No"
+              - generic [ref=e158]: (아니요, 否)
+        - paragraph [ref=e159]:
+          - generic [ref=e160]: How confident are you in this answer?
+          - generic [ref=e161]: (이 답변에 얼마나 확신합니까?, 你对这个回答有多大信心？)
+        - generic [ref=e162]:
+          - generic [ref=e163]:
+            - radio "0"
+            - generic [ref=e164] [cursor=pointer]: "0"
+          - generic [ref=e165]:
+            - radio "1"
+            - generic [ref=e166] [cursor=pointer]: "1"
+          - generic [ref=e167]:
+            - radio "2"
+            - generic [ref=e168] [cursor=pointer]: "2"
+          - generic [ref=e169]:
+            - radio "3" [checked] [active]
+            - generic [ref=e170] [cursor=pointer]: "3"
+          - generic [ref=e171]:
+            - radio "4"
+            - generic [ref=e172] [cursor=pointer]: "4"
+          - generic [ref=e173]:
+            - radio "5"
+            - generic [ref=e174] [cursor=pointer]: "5"
+          - generic [ref=e175]:
+            - radio "6"
+            - generic [ref=e176] [cursor=pointer]: "6"
+        - generic [ref=e177]:
+          - generic [ref=e178]:
+            - generic [ref=e179]: 0 - Not at all confident
+            - generic [ref=e180]: (전혀 확신하지 않음, 完全没有信心)
+          - generic [ref=e182]:
+            - generic [ref=e183]: 6 - Completely confident
+            - generic [ref=e184]: (완전히 확신함, 完全有信心)
+      - alert [ref=e60]
+      - button "Continue" [ref=e62] [cursor=pointer]

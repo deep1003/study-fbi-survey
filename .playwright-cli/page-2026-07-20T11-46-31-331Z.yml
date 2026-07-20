@@ -1,0 +1,11 @@
+- main [ref=e3]:
+  - generic [ref=e4]:
+    - paragraph [ref=e5]: Visual Scene Questionnaire
+    - paragraph [ref=e24]: Complete
+  - generic [ref=e242]:
+    - heading "Response submitted" [level=1] [ref=e243]
+    - paragraph [ref=e244]: Thank you. Your response has been recorded. You may now close this page.
+    - status [ref=e245]:
+      - generic [ref=e246]: ✓
+      - generic [ref=e247]: Submission complete
+    - paragraph [ref=e248]: "Receipt: H20260720-QA20260720"
