@@ -88,6 +88,7 @@
     }
 
     .intro,
+    .demographics,
     .complete {
       max-width: 760px;
       margin: 52px auto 0;
@@ -95,6 +96,7 @@
     }
 
     .intro h1,
+    .demographics h1,
     .complete h1 {
       margin: 0 0 18px;
       font-size: 42px;
@@ -103,6 +105,7 @@
     }
 
     .intro p,
+    .demographics p,
     .complete p {
       color: #374349;
       max-width: 68ch;
@@ -115,6 +118,22 @@
     }
 
     .consent-list li { margin: 8px 0; }
+
+    .project-overview {
+      margin: 28px 0;
+      padding: 22px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .project-overview h2 {
+      margin: 0 0 12px;
+      font-size: 20px;
+    }
+
+    .project-overview p { margin: 8px 0; }
+
+    .translation { color: var(--muted); }
 
     .check-row {
       display: grid;
@@ -368,6 +387,29 @@
       font-weight: 650;
     }
 
+    .demographic-fields {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px 24px;
+      margin-top: 28px;
+    }
+
+    .demographic-field label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 700;
+    }
+
+    .demographic-field select {
+      width: 100%;
+      min-height: 48px;
+      padding: 8px 38px 8px 12px;
+      border: 1px solid var(--line-strong);
+      border-radius: 4px;
+      background: var(--surface);
+      color: var(--ink);
+    }
+
     .submission-status {
       display: flex;
       align-items: center;
@@ -451,7 +493,7 @@
       .shell { width: min(100% - 20px, 760px); }
       .study-header { align-items: flex-start; }
       .question-region { padding: 22px 16px; }
-      .intro h1, .complete h1 { font-size: 32px; }
+      .intro h1, .demographics h1, .complete h1 { font-size: 32px; }
       legend { font-size: 21px; margin-bottom: 24px; }
       .scale { gap: 4px; }
       .scale-option label { min-height: 44px; font-size: 14px; }
@@ -459,6 +501,7 @@
       .actions { margin-top: 28px; }
       .button { width: 100%; }
       .submission-actions { flex-direction: column; }
+      .demographic-fields { grid-template-columns: 1fr; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -476,7 +519,13 @@
 
     <section class="intro" id="intro-screen">
       <h1>Scene evaluation study</h1>
-      <p>You will view one fictional, film-like image and answer seven short questions about it. The questionnaire usually takes 3 to 5 minutes.</p>
+      <div class="project-overview">
+        <h2>About this project</h2>
+        <p>This project studies how people and vision-language systems interpret the same fictional film scene. We examine judgments about an object, the characters' situation, the atmosphere, and the scene's aesthetic value. Your responses provide a human comparison for automated visual judgments. There are no right or wrong answers.</p>
+        <p class="translation" lang="ko">이 프로젝트는 사람과 비전-언어 시스템이 동일한 허구의 영화 장면을 어떻게 해석하는지 연구합니다. 장면 속 물체, 인물의 상황, 분위기, 그리고 장면의 미학적 가치에 대한 판단을 살펴봅니다. 여러분의 응답은 자동화된 시각 판단과 비교할 인간 기준을 만드는 데 사용됩니다. 정답이나 오답은 없습니다.</p>
+        <p class="translation" lang="zh-Hans">本项目研究人类与视觉语言系统如何理解同一个虚构电影场景。我们关注人们对场景中物体、人物处境、整体氛围和审美价值的判断。您的回答将为自动视觉判断提供人类比较基准。本问卷没有正确或错误答案。</p>
+      </div>
+      <p>You will view one image, answer seven scene questions, and provide four basic background responses. The questionnaire usually takes 4 to 6 minutes.</p>
       <ul class="consent-list">
         <li>Participation is voluntary.</li>
         <li>You may stop before submitting your response.</li>
@@ -516,6 +565,73 @@
       </div>
     </section>
 
+    <section class="demographics" id="demographics-screen" hidden>
+      <h1>Participant background</h1>
+      <p>Please answer four brief background questions. Select “Prefer not to answer” whenever you do not wish to provide an answer.</p>
+      <p class="translation" lang="ko">간단한 배경 정보 네 문항에 답해 주세요. 응답을 원하지 않는 문항은 “응답하지 않음”을 선택할 수 있습니다.</p>
+      <p class="translation" lang="zh-Hans">请回答四个简短的背景问题。如果您不希望提供某项信息，请选择“不愿回答”。</p>
+      <form id="demographics-form" novalidate>
+        <div class="demographic-fields">
+          <div class="demographic-field">
+            <label for="age-group">Age group (연령대, 年龄组)</label>
+            <select id="age-group" name="age_group" required>
+              <option value="">Select (선택, 请选择)</option>
+              <option value="18_24">18-24</option>
+              <option value="25_34">25-34</option>
+              <option value="35_44">35-44</option>
+              <option value="45_54">45-54</option>
+              <option value="55_64">55-64</option>
+              <option value="65_plus">65+</option>
+              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
+            </select>
+          </div>
+          <div class="demographic-field">
+            <label for="gender">Gender (성별, 性别)</label>
+            <select id="gender" name="gender" required>
+              <option value="">Select (선택, 请选择)</option>
+              <option value="woman">Woman (여성, 女性)</option>
+              <option value="man">Man (남성, 男性)</option>
+              <option value="nonbinary_other">Non-binary or another identity (논바이너리 또는 다른 정체성, 非二元性别或其他认同)</option>
+              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
+            </select>
+          </div>
+          <div class="demographic-field">
+            <label for="region">Region of residence (거주 권역, 居住地区)</label>
+            <select id="region" name="region" required>
+              <option value="">Select (선택, 请选择)</option>
+              <option value="east_asia">East Asia (동아시아, 东亚)</option>
+              <option value="southeast_asia">Southeast Asia (동남아시아, 东南亚)</option>
+              <option value="south_asia">South Asia (남아시아, 南亚)</option>
+              <option value="europe">Europe (유럽, 欧洲)</option>
+              <option value="north_america">North America (북아메리카, 北美洲)</option>
+              <option value="latin_america_caribbean">Latin America or the Caribbean (라틴아메리카 또는 카리브해, 拉丁美洲或加勒比地区)</option>
+              <option value="middle_east_north_africa">Middle East or North Africa (중동 또는 북아프리카, 中东或北非)</option>
+              <option value="sub_saharan_africa">Sub-Saharan Africa (사하라 이남 아프리카, 撒哈拉以南非洲)</option>
+              <option value="oceania">Oceania (오세아니아, 大洋洲)</option>
+              <option value="other">Other region (기타 권역, 其他地区)</option>
+              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
+            </select>
+          </div>
+          <div class="demographic-field">
+            <label for="education">Highest completed education (최종 학력, 最高学历)</label>
+            <select id="education" name="education" required>
+              <option value="">Select (선택, 请选择)</option>
+              <option value="less_than_secondary">Less than secondary school (중등교육 미만, 未完成中等教育)</option>
+              <option value="secondary">Secondary school (중등교육, 中等教育)</option>
+              <option value="some_college">Some college or associate degree (대학 재학 또는 전문학사, 部分大学教育或副学士)</option>
+              <option value="bachelors">Bachelor's degree (학사, 学士)</option>
+              <option value="graduate">Graduate or professional degree (대학원 또는 전문학위, 研究生或专业学位)</option>
+              <option value="prefer_not">Prefer not to answer (응답하지 않음, 不愿回答)</option>
+            </select>
+          </div>
+        </div>
+        <p class="validation" id="demographics-validation" role="alert"></p>
+        <div class="actions">
+          <button class="button" id="demographics-submit" type="submit">Submit response</button>
+        </div>
+      </form>
+    </section>
+
     <section class="complete" id="complete-screen" hidden>
       <h1 id="completion-heading">Submitting your response</h1>
       <p id="completion-message">Please keep this page open while your response is securely submitted.</p>
@@ -537,11 +653,11 @@
     const CONFIG = Object.freeze({
       studyId: "FBI",
       manifestVersion: "6.1.0",
-      questionnaireVersion: "human_questionnaire_v1.2.0",
+      questionnaireVersion: "human_questionnaire_v1.3.0",
       assignmentPool: "primary7_apple_original",
       imageRoot: window.FBI_SURVEY_CONFIG?.imageRoot || "../../../02_stimuli/final/FBI_images/",
       submitEndpoint: window.FBI_SURVEY_CONFIG?.submitEndpoint || "",
-      storagePrefix: "fbi-human-questionnaire-v1-2"
+      storagePrefix: "fbi-human-questionnaire-v1-3"
     });
 
     const STIMULI = Object.freeze({
@@ -592,6 +708,7 @@
     const ui = {
       intro: document.getElementById("intro-screen"),
       question: document.getElementById("question-screen"),
+      demographics: document.getElementById("demographics-screen"),
       complete: document.getElementById("complete-screen"),
       adult: document.getElementById("adult-check"),
       consent: document.getElementById("consent-check"),
@@ -606,6 +723,8 @@
       content: document.getElementById("question-content"),
       questionValidation: document.getElementById("question-validation"),
       next: document.getElementById("next-button"),
+      demographicsForm: document.getElementById("demographics-form"),
+      demographicsValidation: document.getElementById("demographics-validation"),
       completionHeading: document.getElementById("completion-heading"),
       completionMessage: document.getElementById("completion-message"),
       completionCode: document.getElementById("completion-code"),
@@ -687,6 +806,7 @@
         itemOrder: [],
         currentIndex: 0,
         answers: {},
+        demographics: {},
         viewport: { width: window.innerWidth, height: window.innerHeight }
       };
     }
@@ -747,6 +867,7 @@
     function setScreen(name) {
       ui.intro.hidden = name !== "intro";
       ui.question.hidden = name !== "question";
+      ui.demographics.hidden = name !== "demographics";
       ui.complete.hidden = name !== "complete";
     }
 
@@ -935,7 +1056,7 @@
       }
       recordCurrentAnswer();
       if (state.currentIndex >= state.itemOrder.length - 1) {
-        finishQuestionnaire();
+        renderDemographics();
       } else {
         state.currentIndex += 1;
         saveState();
@@ -976,6 +1097,36 @@
       renderComplete();
       submitResponse();
     }
+
+    function renderDemographics() {
+      setScreen("demographics");
+      ui.progressCopy.textContent = "Background";
+      ui.progressBar.style.width = "100%";
+      ui.demographicsValidation.textContent = "";
+      Object.entries(state.demographics || {}).forEach(([name, value]) => {
+        const field = ui.demographicsForm.elements.namedItem(name);
+        if (field) field.value = value;
+      });
+      window.scrollTo({ top: 0, behavior: "auto" });
+    }
+
+    ui.demographicsForm.addEventListener("submit", event => {
+      event.preventDefault();
+      if (!ui.demographicsForm.checkValidity()) {
+        ui.demographicsValidation.textContent = "Please answer every background question or select Prefer not to answer.";
+        ui.demographicsForm.reportValidity();
+        return;
+      }
+      const data = new FormData(ui.demographicsForm);
+      state.demographics = {
+        age_group: String(data.get("age_group")),
+        gender: String(data.get("gender")),
+        region: String(data.get("region")),
+        education: String(data.get("education"))
+      };
+      saveState();
+      finishQuestionnaire();
+    });
 
     function renderComplete() {
       setScreen("complete");
@@ -1022,6 +1173,7 @@
         stimulus: { ...stimulus },
         item_order: [...state.itemOrder],
         viewport: { ...state.viewport },
+        demographics: { ...state.demographics },
         answers: state.itemOrder.map(id => state.answers[id]),
         long_rows: toLongRows()
       };
@@ -1054,7 +1206,11 @@
         session_started_at: state.startedAt,
         session_completed_at: state.completedAt,
         viewport_width: state.viewport.width,
-        viewport_height: state.viewport.height
+        viewport_height: state.viewport.height,
+        age_group: state.demographics.age_group,
+        gender: state.demographics.gender,
+        region: state.demographics.region,
+        education: state.demographics.education
       };
 
       const rows = [];
@@ -1117,6 +1273,7 @@
         state.submissionError = "";
         state.answers = {};
         state.itemOrder = [];
+        state.demographics = {};
         state.responsePurged = true;
         saveState();
       } catch (error) {
@@ -1142,6 +1299,8 @@
       if (state.completedAt) {
         renderComplete();
         if (state.submissionStatus !== "submitted") submitResponse();
+      } else if (state.startedAt && state.stimulusId && state.itemOrder.length && state.itemOrder.every(id => state.answers[id])) {
+        renderDemographics();
       } else if (state.startedAt && state.stimulusId && state.itemOrder.length) {
         prepareStimulus();
         renderQuestion();
