@@ -816,6 +816,9 @@
     async function assignStimulus() {
       if (state.stimulusId && STIMULI[state.stimulusId]) return state.stimulusId;
       if (!CONFIG.assignEndpoint) {
+        const localHost = window.location.protocol === "file:"
+          || ["localhost", "127.0.0.1", "::1"].includes(window.location.hostname);
+        if (!localHost) throw new Error("The assignment service is not configured.");
         state.assignmentId = `local-${state.runId}`;
         return chooseLocalStimulus();
       }
@@ -1254,7 +1257,9 @@
         });
         const result = await response.json().catch(() => ({}));
         if (!response.ok || result.ok !== true || !cleanToken(result.response_id)) {
-          throw new Error(result.error || `Submission service returned ${response.status}.`);
+          const error = new Error(result.error || `Submission service returned ${response.status}.`);
+          error.status = response.status;
+          throw error;
         }
         state.submittedAt = new Date().toISOString();
         state.submissionStatus = "submitted";
@@ -1269,7 +1274,9 @@
         state.submissionStatus = "failed";
         state.submissionError = error.name === "AbortError"
           ? "The submission timed out. Please try again. (제출 시간이 초과되었습니다. 다시 시도해 주세요., 提交超时。请重试。)"
-          : "The response could not be submitted. Please try again. (응답을 제출할 수 없습니다. 다시 시도해 주세요., 无法提交回答。请重试。)";
+          : error.status >= 400 && error.status < 500
+            ? `Submission was rejected: ${error.message} (제출이 거부되었습니다. 연구팀에 이 메시지를 알려 주세요., 提交被拒绝。请将此消息告知研究团队。)`
+            : "The response could not be submitted. Please try again. (응답을 제출할 수 없습니다. 다시 시도해 주세요., 无法提交回答。请重试。)";
         saveState();
       } finally {
         window.clearTimeout(timeout);
