@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="color-scheme" content="light">
   <link rel="icon" href="data:,">
-  <title>Visual Scene Questionnaire</title>
+  <title>Visual Scene Questionnaire (시각 장면 설문, 视觉场景问卷)</title>
   <style>
     :root {
       --page: #f3f5f5;
@@ -491,7 +491,13 @@
 
     @media (max-width: 560px) {
       .shell { width: min(100% - 20px, 760px); }
-      .study-header { align-items: flex-start; }
+      .study-header {
+        display: grid;
+        grid-template-columns: 1fr;
+        align-items: flex-start;
+        gap: 6px;
+      }
+      .progress-copy { white-space: normal; }
       .question-region { padding: 22px 16px; }
       .intro h1, .demographics h1, .complete h1 { font-size: 32px; }
       legend { font-size: 21px; margin-bottom: 24px; }
@@ -513,36 +519,40 @@
   <div class="topbar" aria-hidden="true"><div class="topbar-progress" id="topbar-progress"></div></div>
   <main class="shell">
     <header class="study-header">
-      <p class="study-title">Visual Scene Questionnaire</p>
+      <p class="study-title">Visual Scene Questionnaire (시각 장면 설문, 视觉场景问卷)</p>
       <p class="progress-copy" id="progress-copy" aria-live="polite"></p>
     </header>
 
     <section class="intro" id="intro-screen">
-      <h1>Scene evaluation study</h1>
+      <h1>Scene evaluation study (장면 평가 연구, 场景评估研究)</h1>
       <div class="project-overview">
-        <h2>About this project</h2>
-        <p>This project studies how people and vision-language systems interpret the same fictional film scene. We examine judgments about an object, the characters' situation, the atmosphere, and the scene's aesthetic value. Your responses provide a human comparison for automated visual judgments. There are no right or wrong answers.</p>
-        <p class="translation" lang="ko">이 프로젝트는 사람과 비전-언어 시스템이 동일한 허구의 영화 장면을 어떻게 해석하는지 연구합니다. 장면 속 물체, 인물의 상황, 분위기, 그리고 장면의 미학적 가치에 대한 판단을 살펴봅니다. 여러분의 응답은 자동화된 시각 판단과 비교할 인간 기준을 만드는 데 사용됩니다. 정답이나 오답은 없습니다.</p>
-        <p class="translation" lang="zh-Hans">本项目研究人类与视觉语言系统如何理解同一个虚构电影场景。我们关注人们对场景中物体、人物处境、整体氛围和审美价值的判断。您的回答将为自动视觉判断提供人类比较基准。本问卷没有正确或错误答案。</p>
+        <h2>About this project (프로젝트 소개, 项目简介)</h2>
+        <p>
+          <span class="localized-main">This project studies how people and vision-language systems interpret the same fictional film scene. We examine judgments about an object, the characters' situation, the atmosphere, and the scene's aesthetic value. Your responses provide a human comparison for automated visual judgments. There are no right or wrong answers.</span>
+          <span class="localized-translation">(이 프로젝트는 사람과 비전-언어 시스템이 동일한 허구의 영화 장면을 어떻게 해석하는지 연구합니다. 장면 속 물체, 인물의 상황, 분위기, 그리고 장면의 미학적 가치에 대한 판단을 살펴봅니다. 여러분의 응답은 자동화된 시각 판단과 비교할 인간 기준을 만드는 데 사용됩니다. 정답이나 오답은 없습니다., 本项目研究人类与视觉语言系统如何理解同一个虚构电影场景。我们关注人们对场景中物体、人物处境、整体氛围和审美价值的判断。您的回答将为自动视觉判断提供人类比较基准。本问卷没有正确或错误答案。)</span>
+        </p>
       </div>
-      <p>You will view one image, answer seven scene questions, and provide four basic background responses. The questionnaire usually takes 4 to 6 minutes.</p>
+      <p>
+        <span class="localized-main">You will view one image, answer seven scene questions, and provide four basic background responses. The questionnaire usually takes 4 to 6 minutes.</span>
+        <span class="localized-translation">(이미지 한 장을 보고 장면에 관한 일곱 문항과 기본 배경 정보 네 문항에 답하게 됩니다. 설문에는 보통 4~6분이 걸립니다., 您将观看一张图片，回答七个场景问题和四个基本背景问题。问卷通常需要4至6分钟。)</span>
+      </p>
       <ul class="consent-list">
-        <li>Participation is voluntary.</li>
-        <li>You may stop before submitting your response.</li>
-        <li>No name, email address, or other direct identifier is requested.</li>
-        <li>The image may contain a tense interpersonal situation.</li>
+        <li>Participation is voluntary. (참여는 자발적입니다., 参与完全自愿。)</li>
+        <li>You may stop before submitting your response. (응답을 제출하기 전에 언제든 중단할 수 있습니다., 您可以在提交回答前随时退出。)</li>
+        <li>No name, email address, or other direct identifier is requested. (이름, 이메일 주소 또는 기타 직접 식별 정보는 요청하지 않습니다., 本问卷不要求提供姓名、电子邮件地址或其他直接身份信息。)</li>
+        <li>The image may contain a tense interpersonal situation. (이미지에는 긴장감 있는 대인 상황이 포함될 수 있습니다., 图像可能包含紧张的人际情境。)</li>
       </ul>
       <label class="check-row">
         <input type="checkbox" id="adult-check">
-        <span>I confirm that I am at least 18 years old.</span>
+        <span>I confirm that I am at least 18 years old. (본인은 만 18세 이상임을 확인합니다., 我确认本人年满18周岁。)</span>
       </label>
       <label class="check-row">
         <input type="checkbox" id="consent-check">
-        <span>I have read the information above and voluntarily agree to participate.</span>
+        <span>I have read the information above and voluntarily agree to participate. (위 정보를 읽었으며 자발적으로 참여하는 데 동의합니다., 我已阅读上述信息并自愿同意参与。)</span>
       </label>
       <p class="validation" id="intro-validation" role="alert"></p>
       <div class="actions">
-        <button class="button" id="begin-button" type="button" disabled>Begin</button>
+        <button class="button" id="begin-button" type="button" disabled>Begin (시작, 开始)</button>
       </div>
     </section>
 
@@ -550,8 +560,8 @@
       <div class="question-layout">
         <div class="stimulus-region">
           <div class="stimulus-frame">
-            <img id="stimulus-image" alt="Fictional film scene used for this questionnaire">
-            <p class="stimulus-error" id="stimulus-error" hidden>The study image could not be loaded. Please stop and notify the research team.</p>
+            <img id="stimulus-image" alt="Fictional film scene used for this questionnaire (설문에 사용되는 허구의 영화 장면, 问卷所用的虚构电影场景)">
+            <p class="stimulus-error" id="stimulus-error" hidden>The study image could not be loaded. Please stop and notify the research team. (연구 이미지를 불러올 수 없습니다. 설문을 중단하고 연구팀에 알려 주세요., 无法加载研究图像。请停止问卷并通知研究团队。)</p>
           </div>
         </div>
         <form class="question-region" id="question-form" novalidate>
@@ -559,17 +569,18 @@
           <div id="question-content"></div>
           <p class="validation" id="question-validation" role="alert"></p>
           <div class="actions">
-            <button class="button" id="next-button" type="submit" disabled>Continue</button>
+            <button class="button" id="next-button" type="submit" disabled>Continue (계속, 继续)</button>
           </div>
         </form>
       </div>
     </section>
 
     <section class="demographics" id="demographics-screen" hidden>
-      <h1>Participant background</h1>
-      <p>Please answer four brief background questions. Select “Prefer not to answer” whenever you do not wish to provide an answer.</p>
-      <p class="translation" lang="ko">간단한 배경 정보 네 문항에 답해 주세요. 응답을 원하지 않는 문항은 “응답하지 않음”을 선택할 수 있습니다.</p>
-      <p class="translation" lang="zh-Hans">请回答四个简短的背景问题。如果您不希望提供某项信息，请选择“不愿回答”。</p>
+      <h1>Participant background (참가자 배경 정보, 参与者背景信息)</h1>
+      <p>
+        <span class="localized-main">Please answer four brief background questions. Select “Prefer not to answer” whenever you do not wish to provide an answer.</span>
+        <span class="localized-translation">(간단한 배경 정보 네 문항에 답해 주세요. 응답을 원하지 않는 문항은 “응답하지 않음”을 선택할 수 있습니다., 请回答四个简短的背景问题。如果您不希望提供某项信息，请选择“不愿回答”。)</span>
+      </p>
       <form id="demographics-form" novalidate>
         <div class="demographic-fields">
           <div class="demographic-field">
@@ -627,21 +638,21 @@
         </div>
         <p class="validation" id="demographics-validation" role="alert"></p>
         <div class="actions">
-          <button class="button" id="demographics-submit" type="submit">Submit response</button>
+          <button class="button" id="demographics-submit" type="submit">Submit response (응답 제출, 提交回答)</button>
         </div>
       </form>
     </section>
 
     <section class="complete" id="complete-screen" hidden>
-      <h1 id="completion-heading">Submitting your response</h1>
-      <p id="completion-message">Please keep this page open while your response is securely submitted.</p>
+      <h1 id="completion-heading">Submitting your response (응답 제출 중, 正在提交回答)</h1>
+      <p id="completion-message">Please keep this page open while your response is securely submitted. (응답이 안전하게 제출되는 동안 이 페이지를 열어 두세요., 正在安全提交您的回答，请保持此页面打开。)</p>
       <div class="submission-status" role="status" aria-live="polite">
         <span class="submission-indicator" id="submission-indicator" aria-hidden="true"></span>
-        <span id="submission-status-text">Submission in progress</span>
+        <span id="submission-status-text">Submission in progress (제출 진행 중, 正在提交)</span>
       </div>
       <p class="receipt-code" id="completion-code" hidden></p>
       <div class="submission-actions">
-        <button class="button" id="retry-submission" type="button" hidden>Retry submission</button>
+        <button class="button" id="retry-submission" type="button" hidden>Retry submission (제출 재시도, 重试提交)</button>
       </div>
     </section>
   </main>
@@ -653,11 +664,11 @@
     const CONFIG = Object.freeze({
       studyId: "FBI",
       manifestVersion: "6.1.0",
-      questionnaireVersion: "human_questionnaire_v1.3.0",
+      questionnaireVersion: "human_questionnaire_v1.4.0",
       assignmentPool: "primary7_apple_original",
       imageRoot: window.FBI_SURVEY_CONFIG?.imageRoot || "../../../02_stimuli/final/FBI_images/",
       submitEndpoint: window.FBI_SURVEY_CONFIG?.submitEndpoint || "",
-      storagePrefix: "fbi-human-questionnaire-v1-3"
+      storagePrefix: "fbi-human-questionnaire-v1-4"
     });
 
     const STIMULI = Object.freeze({
@@ -881,7 +892,7 @@
 
     ui.begin.addEventListener("click", () => {
       if (!ui.adult.checked || !ui.consent.checked) {
-        ui.introValidation.textContent = "Both confirmations are required to continue.";
+        ui.introValidation.textContent = "Both confirmations are required to continue. (계속하려면 두 항목을 모두 확인해야 합니다., 必须确认以上两项才能继续。)";
         return;
       }
       state.consentedAt = new Date().toISOString();
@@ -920,12 +931,14 @@
       const stimulus = STIMULI[state.stimulusId];
       const current = adaptQuestion(baseItem, stimulus);
 
-      ui.progressCopy.textContent = `Question ${index + 1} of ${total}`;
+      ui.progressCopy.textContent = `Question ${index + 1} of ${total} (문항 ${index + 1}/${total}, 第${index + 1}题/共${total}题)`;
       ui.progressBar.style.width = `${((index + 1) / total) * 100}%`;
       ui.blockLabel.textContent = localizedText(BLOCK_LABELS[current.block]);
       ui.questionValidation.textContent = "";
       ui.next.disabled = true;
-      ui.next.textContent = index === total - 1 ? "Finish" : "Continue";
+      ui.next.textContent = index === total - 1
+        ? "Finish (완료, 完成)"
+        : "Continue (계속, 继续)";
       ui.content.replaceChildren(current.type === "scale" ? renderScale(current) : renderBinaryConfidence(current));
       itemStartedAtMs = performance.now();
       window.scrollTo({ top: 0, behavior: "auto" });
@@ -1051,7 +1064,7 @@
     ui.form.addEventListener("submit", event => {
       event.preventDefault();
       if (!validateCurrentForm()) {
-        ui.questionValidation.textContent = "Please select an answer before continuing.";
+        ui.questionValidation.textContent = "Please select an answer before continuing. (계속하기 전에 응답을 선택해 주세요., 继续前请选择一个回答。)";
         return;
       }
       recordCurrentAnswer();
@@ -1100,7 +1113,7 @@
 
     function renderDemographics() {
       setScreen("demographics");
-      ui.progressCopy.textContent = "Background";
+      ui.progressCopy.textContent = "Background (배경 정보, 背景信息)";
       ui.progressBar.style.width = "100%";
       ui.demographicsValidation.textContent = "";
       Object.entries(state.demographics || {}).forEach(([name, value]) => {
@@ -1113,7 +1126,7 @@
     ui.demographicsForm.addEventListener("submit", event => {
       event.preventDefault();
       if (!ui.demographicsForm.checkValidity()) {
-        ui.demographicsValidation.textContent = "Please answer every background question or select Prefer not to answer.";
+        ui.demographicsValidation.textContent = "Please answer every background question or select Prefer not to answer. (모든 배경 문항에 답하거나 응답하지 않음을 선택해 주세요., 请回答所有背景问题，或选择不愿回答。)";
         ui.demographicsForm.reportValidity();
         return;
       }
@@ -1130,29 +1143,29 @@
 
     function renderComplete() {
       setScreen("complete");
-      ui.progressCopy.textContent = "Complete";
+      ui.progressCopy.textContent = "Complete (완료, 已完成)";
       ui.progressBar.style.width = "100%";
       ui.retrySubmission.hidden = true;
       ui.completionCode.hidden = true;
       ui.submissionIndicator.className = "submission-indicator";
 
       if (state.submissionStatus === "submitted") {
-        ui.completionHeading.textContent = "Response submitted";
-        ui.completionMessage.textContent = "Thank you. Your response has been recorded. You may now close this page.";
-        ui.submissionStatusText.textContent = "Submission complete";
+        ui.completionHeading.textContent = "Response submitted (응답 제출 완료, 回答已提交)";
+        ui.completionMessage.textContent = "Thank you. Your response has been recorded. You may now close this page. (감사합니다. 응답이 기록되었습니다. 이제 이 페이지를 닫아도 됩니다., 谢谢。您的回答已记录。现在可以关闭此页面。)";
+        ui.submissionStatusText.textContent = "Submission complete (제출 완료, 提交完成)";
         ui.submissionIndicator.classList.add("success");
-        ui.completionCode.textContent = `Receipt: ${state.responseId}`;
+        ui.completionCode.textContent = `Receipt (접수 코드, 回执编号): ${state.responseId}`;
         ui.completionCode.hidden = false;
       } else if (state.submissionStatus === "failed") {
-        ui.completionHeading.textContent = "Submission interrupted";
-        ui.completionMessage.textContent = "Your response is still saved in this browser. Check your connection and try again.";
-        ui.submissionStatusText.textContent = state.submissionError || "The response could not be submitted.";
+        ui.completionHeading.textContent = "Submission interrupted (제출 중단, 提交中断)";
+        ui.completionMessage.textContent = "Your response is still saved in this browser. Check your connection and try again. (응답은 이 브라우저에 보관되어 있습니다. 인터넷 연결을 확인하고 다시 시도해 주세요., 您的回答仍保存在此浏览器中。请检查网络连接后重试。)";
+        ui.submissionStatusText.textContent = state.submissionError || "The response could not be submitted. (응답을 제출할 수 없습니다., 无法提交回答。)";
         ui.submissionIndicator.classList.add("error");
         ui.retrySubmission.hidden = false;
       } else {
-        ui.completionHeading.textContent = "Submitting your response";
-        ui.completionMessage.textContent = "Please keep this page open while your response is securely submitted.";
-        ui.submissionStatusText.textContent = "Submission in progress";
+        ui.completionHeading.textContent = "Submitting your response (응답 제출 중, 正在提交回答)";
+        ui.completionMessage.textContent = "Please keep this page open while your response is securely submitted. (응답이 안전하게 제출되는 동안 이 페이지를 열어 두세요., 正在安全提交您的回答，请保持此页面打开。)";
+        ui.submissionStatusText.textContent = "Submission in progress (제출 진행 중, 正在提交)";
       }
       window.scrollTo({ top: 0, behavior: "auto" });
     }
@@ -1243,7 +1256,7 @@
       if (state.submissionStatus === "submitted") return;
       if (!CONFIG.submitEndpoint) {
         state.submissionStatus = "failed";
-        state.submissionError = "The survey submission service is not configured. Please notify the research team.";
+        state.submissionError = "The survey submission service is not configured. Please notify the research team. (설문 제출 서비스가 설정되지 않았습니다. 연구팀에 알려 주세요., 问卷提交服务尚未配置。请通知研究团队。)";
         saveState();
         renderComplete();
         return;
@@ -1279,8 +1292,8 @@
       } catch (error) {
         state.submissionStatus = "failed";
         state.submissionError = error.name === "AbortError"
-          ? "The submission timed out. Please try again."
-          : "The response could not be submitted. Please try again.";
+          ? "The submission timed out. Please try again. (제출 시간이 초과되었습니다. 다시 시도해 주세요., 提交超时。请重试。)"
+          : "The response could not be submitted. Please try again. (응답을 제출할 수 없습니다. 다시 시도해 주세요., 无法提交回答。请重试。)";
         saveState();
       } finally {
         window.clearTimeout(timeout);
